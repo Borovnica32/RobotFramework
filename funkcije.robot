@@ -23,4 +23,3 @@ Log Out User
     Wait Until Page Contains   Glavana staran    10s
     Log To Console    \nUser logged out
     Sleep    5s
-
