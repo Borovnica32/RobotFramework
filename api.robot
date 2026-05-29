@@ -1,10 +1,12 @@
 *** Settings ***
 Library    RequestsLibrary
+Library    Collections
 Library    DateTime
 
 *** Variables ***
 ${dataFrom}    Star Wars
 ${AWSEndpoint}    https://37tc173it4.execute-api.eu-north-1.amazonaws.com/data?name=${dataFrom}
+@{UCSByName}
 
 *** Test Cases ***
 Get sets
@@ -19,7 +21,22 @@ Get sets
     ${body}=        Evaluate    $response.json()
     ${data}=    Set Variable    ${body["data"]}
     ${table}=    Set Variable   ${body["table"]}
-    ${count}=    Get Length    ${data}
+
+    
+    ${USCTheme}=    Create List
+
+    FOR    ${item}    IN    @{body["data"]}
+        IF    $item.get("subtheme") == "Ultimate Collector Series"
+            Append To List    ${USCTheme}    ${item}
+        END
+    END
+
+
+    ${count}=    Get Length    ${USCTheme}
+
+    ${valentina}=    Evaluate    json.dumps($body, indent=4)    json
+
+    Log To Console    \n${valentina}
 
     Should Be True    ${requestTime} < 5
         Log To Console    \n[1] Time to execute request: ${requestTime}
