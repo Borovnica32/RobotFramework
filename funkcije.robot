@@ -10,7 +10,7 @@ Log In User
     Click Element     xpath://button[contains(text(), "Log in")]
 
     Wait Until Page Contains   Glavana staran    10s
-    Log To Console    User logged in
+    Log To Console    \nUser logged in
     Sleep    5s
 
 Log Out User
@@ -21,6 +21,6 @@ Log Out User
     Click Element    xpath://a[contains(text(), "Log out")]
 
     Wait Until Page Contains   Glavana staran    10s
-    Log To Console    User logged out
+    Log To Console    \nUser logged out
     Sleep    5s
 
