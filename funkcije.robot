@@ -1,5 +1,6 @@
 *** Settings ***
 Library    SeleniumLibrary
+Library    Collections
 
 *** Keywords *** 
 Log In User
@@ -23,3 +24,21 @@ Log Out User
     Wait Until Page Contains   Glavana staran    10s
     Log To Console    \nUser logged out
     Sleep    5s
+
+List UCS Sets
+    [Arguments]    ${data}    ${body}
+    ${USCTheme}=    Create List
+
+    FOR    ${item}    IN    @{data}
+        IF    $item.get("subtheme") == "Ultimate Collector Series"
+            Append To List    ${USCTheme}    ${item}
+        END
+    END
+
+    ${count}=    Get Length    ${USCTheme}
+
+    ${valentina}=    Evaluate    json.dumps($body, indent=4)    json
+
+    Log To Console    \n${valentina}
+    Log To Console    \nUCS Sets: ${count}
+
